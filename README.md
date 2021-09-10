@@ -4,14 +4,17 @@ Build a PWA(Progressive Web Application) that allows users to do the following f
 the map can be as simple as an SVG HTML Image, a WebGL rendered object, or an actual geographical map.
 
 Functionality:
+
     Add/Update/Delete Config
     View streaming data
 
 The data model should contain the following structures:
+
     Object Configuration: Contains data like (Id, title, location-, and a bunch of dynamic properties)
     Object Real-time Data: The corresponding object will be sending streaming data at a cadence of ~500 ms
  
-Project components: 
+Project components:
+
     Web frontend: You can use any off the shelf component framework (Material UI, ant.design…)
     Form based component to add/update/delete the object configuration
     Realtime component to show streamed data
@@ -24,7 +27,8 @@ Project components:
     Bonus: Webgl based 3D UI for showing the actual 3d models of the objects + data overlay, using something like threejs (You can find low poly 3d models on sketchfab or ploy)
     Bonus: Send a Web Notification if streamed data go beyond a certain threshold
  
-Some Considerations: 
+Some Considerations:
+
     The project needs to be delivered the day before your interview day.
     The project has to be delivered as a git controlled folder, the code is yours, so you can choose to put it on github and give us access to it, or just give it to us as a shared folder.
     We will be only testing on Chrome
@@ -34,6 +38,7 @@ Some Considerations:
 
 
 Project Ideas:
+
     Frontend Utilizing ReactJS for live updates on data
         - To get object data, websocket connection with NodeJS server to update current data displayed 
         - To add, remove, update a new object with new config utilize a REST POST Requst to Backend server
