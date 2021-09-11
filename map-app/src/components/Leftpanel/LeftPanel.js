@@ -10,6 +10,7 @@ import './style.css'
 const LeftPanel = () => {
   return (
     <div className="LeftPanel">
+        <button className="NewObject"> Add object </button>
         <Canvas>
             <OrbitControls/>
 

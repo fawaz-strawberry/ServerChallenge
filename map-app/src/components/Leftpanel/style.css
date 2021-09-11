@@ -2,7 +2,19 @@
     float: left;
     height: 99vh;
     width: 78%;
-    background-color:darkgray;
+    background-color:whitesmoke;
     margin-top: .5vh;
     margin-left: .5%;
+    box-shadow: 1px 1px 2px 2px lightslategrey;
+}
+
+.NewObject {
+    width: 100px;
+    height: 100px;
+    z-index: 9999;
+    position: absolute;
+    display: block;
+    float: left;
+    margin-left: 50px;
+    margin-top: 50px;
 }

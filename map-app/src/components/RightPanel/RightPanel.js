@@ -9,7 +9,7 @@ import './style.css'
 const RightPanel = () => {
   return (
     <div className="RightPanel">
-      <h1>yoyoyo</h1>
+      <h1>Object Details</h1>
     </div>
   )
 }

@@ -7,12 +7,13 @@
 
 <body>
     Client 1
-    <button>Send Message 1</button>
+    <button onclick="sendMessage()">Send Message 1</button>
+    Client2
+    <button onclick="sendMessage2()">Send Message 2</button>
 </body>
 
 <script>
     const socket = new WebSocket('ws://localhost:3000')
-
     socket.addEventListener('open', function(event){
         console.log("Connected to WS Server")
     })
@@ -20,6 +21,29 @@
     socket.addEventListener('message', function (event){
         console.log('Message from server ', event.data)
     })
+
+    const sendMessage = () => {
+        socket.send("Hello from Client 1")
+    }
+
+
+
+    const socket2 = new WebSocket('ws://localhost:3100')
+    socket2.addEventListener('open', function(event){
+        console.log("Connected to WS Server")
+    })
+
+    socket2.addEventListener('message', function (event){
+        console.log('Message from server ', event.data)
+    })
+
+    const sendMessage2 = () => {
+        socket2.send("Hello from Client 2")
+    }
+
+
+
+
 </script>
 
 </html>
