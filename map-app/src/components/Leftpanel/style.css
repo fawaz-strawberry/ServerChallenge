@@ -1,0 +1,8 @@
+.LeftPanel {
+    float: left;
+    height: 99vh;
+    width: 78%;
+    background-color:darkgray;
+    margin-top: .5vh;
+    margin-left: .5%;
+}

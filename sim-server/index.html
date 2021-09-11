@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test Websocket</title> 
+</head>
+
+<body>
+    Client 1
+    <button>Send Message 1</button>
+</body>
+
+<script>
+    const socket = new WebSocket('ws://localhost:3000')
+
+    socket.addEventListener('open', function(event){
+        console.log("Connected to WS Server")
+    })
+
+    socket.addEventListener('message', function (event){
+        console.log('Message from server ', event.data)
+    })
+</script>
+
+</html>
