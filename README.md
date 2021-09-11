@@ -76,6 +76,23 @@ Project Ideas:
     Python Simulation script that will randomly change and modify object attributes.
 
 
+Project Ideas (Updated):
+    
+    ReactJS Server
+        - Handle Front End UI
+        - Add, Grab, Remove Object Configs from the Database
+        - Websocket connection to Simulation server for Object Data
+        - Send REST API calls to simulation server to tell object to move or modify data
+
+    MongoDB
+        - Holds Configurations for all the different types of objects
+        - All objects have an ID, Title, Position, Orientation, and various others depending on type
+
+    Simulation Server
+        - NodeJS server which simulates multiple objects that u websocket into (note: multiple ports required)
+        - REST API calls to modify object data such as location, rotation, and such
+        - Cadence of 500ms per object
+
 
 
 Example Object:
