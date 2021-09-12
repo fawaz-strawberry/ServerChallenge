@@ -16,7 +16,7 @@ const FormElement = ({myKey, value, form, setForm}) => {
                 return false
             }
         })
-        newForm[index].value = e.value
+        newForm[index].value = e.target.value
         setForm(newForm)
     }
   

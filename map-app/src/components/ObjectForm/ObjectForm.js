@@ -1,11 +1,13 @@
 import React from 'react'
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import FormElement from '../FormElement/FormElement'
 import './style.css'
+import axios from 'axios'
+import {ConfigContext} from "../../contexts/ConfigContext"
 
 const ObjectForm = () => {
   
-
+    const {setConfigs} = useContext(ConfigContext)
 
     const [formEntry, setFormEntry] = useState([
         {key:"id", value: 1},
@@ -27,6 +29,19 @@ const ObjectForm = () => {
         }
     }
 
+    function submitConfig()
+    {
+        console.log(formEntry)
+        axios.post('http://localhost:5000/addConfig', {"elements": formEntry}).then(response => {
+            console.log("Adding Configuration To Server")
+            console.log(response.data)
+            setConfigs(response.data)
+          }).catch(error => {
+            console.log("Error when connecting with server")
+          })
+            
+    }
+
     return (
     <div>
         {formEntry.map((element) => (
@@ -39,6 +54,9 @@ const ObjectForm = () => {
         <button className="SubmitNewField" onClick={() => {
             addField()
         }}>Add New Field</button>
+        <button className="SubmitConfiguration" onClick={() => {
+            submitConfig()
+        }}>Submit</button>
     </div>
   )
 }

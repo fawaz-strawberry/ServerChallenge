@@ -7,3 +7,11 @@
 .SubmitNewField {
     margin-left: 5px;
 }
+
+.SubmitConfiguration{
+    width: 94%;
+    left: 2%;
+    height: 30px;
+    font-size: 20px;
+    margin-top: 10px;
+}
