@@ -46,7 +46,7 @@ app.post("/addConfig", function requesthandler(req, res)  {
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("TeslaDB");
-        dbo.collection("ObjConfigs").insertOne(config, function(err, res) {
+        dbo.collection("ObjConfigs").insertOne(config, function(err, result) {
           if (err) throw err;
           console.log("1 document inserted");
           

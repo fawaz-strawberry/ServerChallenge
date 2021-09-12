@@ -10,6 +10,9 @@
     <button onclick="sendMessage()">Send Message 1</button>
     Client2
     <button onclick="sendMessage2()">Send Message 2</button>
+
+    Client3
+    <button onclick="sendMessage3()">Send Message 3</button>
 </body>
 
 <script>
@@ -41,6 +44,20 @@
         socket2.send("Hello from Client 2")
     }
 
+
+
+    const socket3 = new WebSocket('ws://localhost:3002')
+    socket3.addEventListener('open', function(event){
+        console.log("Connected to WS Server")
+    })
+
+    socket3.addEventListener('message', function (event){
+        console.log('Message from server ', event.data)
+    })
+
+    const sendMessage3 = () => {
+        socket3.send("Hello from Client 3")
+    }
 
 
 

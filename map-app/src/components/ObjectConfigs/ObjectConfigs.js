@@ -28,7 +28,9 @@ const ObjectConfigs = ({setOpen, setSelect}) => {
         }
     }
 
-    function generateObject(id_to_gen){
+    //function will send configuration to simulation server which will open a new port and generate a websocket with data streaming of that object
+    //the websocket will be sent back to the website to be displayed on screen.
+    function generateObject(config_to_gen){
 
     }
 
@@ -40,7 +42,7 @@ const ObjectConfigs = ({setOpen, setSelect}) => {
                     <div className="Logo">IMG</div>
                     <div className="Title">{config.title}</div>
                     <div className="Details"></div>
-                    <button onClick={() => {generateObject(config.id); setOpen(true)}}>Generate Object</button>
+                    <button onClick={() => {generateObject(config); setOpen(true)}}>Generate Object</button>
                     <button onClick={() => {setSelect(config.id); setOpen(true)}}>Edit Config</button>
                     <button onClick={() => {deleteConfig(config._id)}}>Delete Config</button>
                 </div>
