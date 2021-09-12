@@ -72,6 +72,8 @@ app.post("/addConfig", function requesthandler(req, res)  {
 app.post("/updateConfig", function requesthandler(req, res) {
 
     var elements = req.body["elements"]
+    var removeElements = req.body["removeElements"]
+
     console.log(elements)
     var config = {}
     for(var i = 0; i < elements.length; i++)
@@ -79,14 +81,22 @@ app.post("/updateConfig", function requesthandler(req, res) {
         config[elements[i]["key"]] = elements[i]["value"]
     }
 
-    console.log("this is my config")
+    var remconfig = {}
+    for(var i = 0; i < removeElements.length; i++)
+    {
+        remconfig[removeElements[i]["key"]] = removeElements[i]["value"]
+    }
+
+    console.log("Updating")
     console.log(config)
+    console.log("removing")
+    console.log(remconfig)
 
     MongoClient.connect(url, function(err, db) {
         if (err) throw err;
         var dbo = db.db("TeslaDB");
         var myquery = {id: req.body["body"]}
-        dbo.collection("ObjConfigs").updateOne(myquery, {$set: config}, function(err, result) {
+        dbo.collection("ObjConfigs").updateOne(myquery, {$set: config, $unset: remconfig}, function(err, result) {
           if (err) throw err;
           console.log("1 document updated");
 

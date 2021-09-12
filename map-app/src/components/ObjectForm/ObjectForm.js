@@ -20,6 +20,10 @@ const ObjectForm = ({selected}) => {
         {key:"loc_Z", value: "25"}
     ]})
 
+    const [removeFormEntry, setRemoveFormEntry] = useState({"data": [
+
+    ]})
+
 
     useEffect(() => {
         if(selected !== -1)
@@ -79,13 +83,32 @@ const ObjectForm = ({selected}) => {
         }
     }
 
+    function deleteField(fieldName)
+    {
+        var temp_form = formEntry["data"]
+        console.log("trying to remove: " + fieldName)
+        for(var i = 0; i < temp_form.length; i++)
+        {
+            if(temp_form[i]["key"] === fieldName)
+            {
+                var removal_form = removeFormEntry["data"]
+                removal_form.push(temp_form.pop(i))
+                setRemoveFormEntry({"data": removal_form})
+                break
+            }
+        }
+
+        setFormEntry({"data": temp_form})
+        
+    }
+
     function submitConfig()
     {
         console.log(formEntry)
         if(selected !== -1)
         {
-            axios.post('http://localhost:5000/updateConfig', {"elements": formEntry["data"], "body": selected}).then(response => {
-                console.log("Adding Configuration To Server")
+            axios.post('http://localhost:5000/updateConfig', {"elements": formEntry["data"], "removeElements": removeFormEntry["data"], "body": selected}).then(response => {
+                console.log("Updating Configuration To Server")
                 console.log(response.data)
                 setConfigs(response.data)
               }).catch(error => {
@@ -134,7 +157,9 @@ const ObjectForm = ({selected}) => {
         {formEntry["data"].map((element, index) => (
             <div className="EntryField">
                 <label className="LabelKey">{element.key}: </label>
-                {element.key !== "id" ? <input key={element.key} className="InputValue" value={element.value} onChange={(e, targ) => {modifyInput(e, element.key)}}></input> :
+                {element.key !== "id" ? (element.key === "title") || element.key === "loc_X" || element.key === "loc_Y" || element.key === "loc_Z" ?
+                <input key={element.key} className="InputValue" value={element.value} onChange={(e, targ) => {modifyInput(e, element.key)}}></input> :
+                <><input key={element.key} className="InputValue" value={element.value} onChange={(e, targ) => {modifyInput(e, element.key)}}></input><button onClick={() => {deleteField(element.key)}}>Delete</button></> :
                     selected === -1 ? <label className="LabelKey">{" " + element.value}</label> : <label className="LabelKey">{" " + selected}</label> }
             </div>
     

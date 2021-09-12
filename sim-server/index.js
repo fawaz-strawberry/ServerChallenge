@@ -1,47 +1,27 @@
 const express = require("express")
+const cors = require('cors')
+const WebSocket = require('ws')
+const { Socket } = require("dgram")
+const { v4: uuidv4 } = require("uuid");
+
 const app = express()
 
-const server = require("http").createServer(app)
-const WebSocket = require('ws')
-
-const wss = new WebSocket.Server({ server:server })
-
-wss.on('connection', function connection(ws) {
-    console.log("A new client connected")
-    ws.send("Welcome New Client!")
-    
-    ws.on('message', function incoming(message) {
-        console.log("received: " + message)
-        ws.send("Got your message: " + message)
-    })
-})
-
-app.get('/', (req, res) => res.send("Hello World!"))
-
-server.listen(3000, () => console.log("Listening on port :3000"))
-
-var connectedPorts = [3000, 3001, 3100]
+app.use(cors())
+app.use(express.json())
 
 
-const server2 = require("http").createServer(app)
+var connectedPorts = [3000, 3001, 3002, 3100]
+var all_objects = []
 
-const wss2 = new WebSocket.Server({ server:server2 })
-
-wss2.on('connection', function connection(ws) {
-    console.log("A new client connected")
-    ws.send("Welcome New Client!")
-    
-    ws.on('message', function incoming(message) {
-        console.log("received: " + message)
-        ws.send("Got your message: " + message)
-    })
-})
-
-server2.listen(3100, () => console.log("Listening on port :3100"))
-
+app.listen(8081, () => { console.log('Server is started on localhost:'+ (8081))})
 
 class RandomObject {
     constructor(config) {
+        console.log("Config is: ")
+        console.log(config)
+        this.config = config
+        console.log("this config is: ")
+        console.log(this.config)
         //First find a port
         this.myPort = 3000
         for(var i = 0; i < 100; i++)
@@ -55,26 +35,36 @@ class RandomObject {
             }
         }
 
-        this.id = config["id"]
-        this.title = config["title"]
-        this.x = config["loc_x"]
-        this.y = config["loc_y"]
-        this.z = config["loc_z"]
+        this.config["id"] = uuidv4();
 
         this.server = require("http").createServer(app)
         this.wss = new WebSocket.Server({server:this.server})
 
-        this.wss.on('connection', function connection(ws) {
-            console.log("A new client connected to: " + this.title)
+
+        this.wss.on('connection', (ws) => {
+            console.log(this.config)
+            console.log("A new client connected to: " + this.config["title"])
             ws.send("Welcome New Client!")
-            
+
+            setInterval(() => {
+                ws.send(JSON.stringify(this.config))
+                this.config["loc_X"] = "" + (parseInt(this.config["loc_X"]) + 1)
+            }, 500)
+
+
             ws.on('message', function incoming(message) {
                 console.log("received: " + message)
                 ws.send("Got your message: " + message)
             })
         })
 
+        
+
         this.server.listen(this.myPort, () => console.log("Listening on port: " + this.myPort))
+    }
+
+    getConfig(){
+        return this.config
     }
 
     getPort(){
@@ -83,8 +73,47 @@ class RandomObject {
 }
 
 
+app.get('/', (req, res) => res.send("Hello World!"))
 
-app.get("/addObject", (req, res) => {
-    let sampleObj = new RandomObject({"id": "temp", "title": "cybertruck", "loc_x":"42", "loc_y":"33", "loc_z":"44"})
+app.post("/addObject", (req, res) => {
+    console.log(req.body)
+    let sampleObj = new RandomObject(req.body)
+    all_objects.push(sampleObj)
     res.send("" + sampleObj.getPort())
 })
+
+
+
+
+const server = require("http").createServer(app)
+const wss = new WebSocket.Server({ server:server })
+wss.on('connection', function connection(ws) {
+    console.log("A new client connected")
+    ws.send("Welcome New Client!")
+    
+    ws.on('message', function incoming(message) {
+        console.log("received: " + message)
+        ws.send("Got your message: " + message)
+    })
+})
+server.listen(3001, () => console.log("Listening on port :3002"))
+
+
+
+const server2 = require("http").createServer(app)
+const wss2 = new WebSocket.Server({ server:server2 })
+wss2.on('connection', function connection(ws) {
+    console.log("A new client connected")
+    ws.send("Welcome New Client!")
+    
+    ws.on('message', function incoming(message) {
+        console.log("received: " + message)
+        ws.send("Got your message: " + message)
+    })
+})
+server2.listen(3100, () => console.log("Listening on port :3100"))
+
+
+
+
+
