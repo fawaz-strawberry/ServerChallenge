@@ -1,0 +1,9 @@
+.NewFieldName{
+    width: 60%;
+    height: 30px;
+    font-size: 25px;
+}
+
+.SubmitNewField {
+    margin-left: 5px;
+}

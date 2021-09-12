@@ -1,0 +1,33 @@
+.Config {
+    width: 94%;
+    height: 70px;
+    left: 2%;
+    background-color: lightslategray;
+    margin:auto;
+    margin-top: 10px;
+    border-radius: 2px;
+    border-style: solid;
+    border-width: 4px;
+    border-color: gray;
+}
+.Config:hover{
+    border-color: lightgreen;
+}
+
+.Logo {
+    width: 20%;
+    height: 100%;
+    float:left;
+    background-color: white;
+}
+
+.Title {
+    width:30%;
+    height: 100%;
+    float: left;
+    background-color: whitesmoke;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
