@@ -32,10 +32,9 @@ function App() {
       console.log("Connected with server!")
       console.log(response)
       setConfigs(response.data)
-    }).catch()
-    {
+    }).catch(() => {
       console.log("Error when connecting with server")
-    }
+    })
   }, [])
 
 
