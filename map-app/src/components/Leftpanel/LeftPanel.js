@@ -10,9 +10,13 @@ import './style.css'
 // import * as THREE from 'three'
 
 
-
+/**
+ * Contains the "map area" and the things like the add object panel
+ * @returns The entire leftPanel that will be displayed to the user
+ */
 const LeftPanel = () => {
 
+  //myobjects holds all objects to be rendered on screen
   const {myObjects} = useContext(ObjectContext)
   const [panelOpen, setPanelOpen] = useState(false)
 

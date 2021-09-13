@@ -6,6 +6,10 @@ import '../ObjectConfigs/ObjectConfigs'
 import ObjectConfigs from '../ObjectConfigs/ObjectConfigs'
 import ObjectForm from '../ObjectForm/ObjectForm'
 
+/**
+ * Contains the ObjectForm(for generating new configs) and the ObjectConfigs(holds current configs)
+ * @returns The panel which will allow the user to generate new objects; add, delete, edit configs
+ */
 const ObjectAdder = () => {
 
   const [openConfig, setOpenConfig] = useState(false)

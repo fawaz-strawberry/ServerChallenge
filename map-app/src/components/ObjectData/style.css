@@ -1,0 +1,30 @@
+.Element {
+    width: 80%;
+    left: 5%;
+    float: left;
+    background-color: whitesmoke;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: gray;
+    border-width: 1px;
+    display: block;
+    margin: auto;
+    margin-left: 10%;
+    margin-top: 5%;
+    margin-bottom: 0px;
+
+}
+
+.Element:hover{
+    border-color: red;
+    border-width: 5px;
+    margin-bottom: -6px;
+}
+
+.EnhancedDetail{
+    height: 100px;
+    width: 100%;
+    background-color: white;
+    border-radius: 20px;
+    display: inline;
+}

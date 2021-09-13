@@ -4,12 +4,17 @@ import RightPanel from './components/RightPanel/RightPanel'
 import LeftPanel from './components/Leftpanel/LeftPanel'
 import {ConfigContext} from './contexts/ConfigContext'
 import {ObjectContext} from './contexts/ObjectContext'
-import { useState, useEffect } from 'react'
 
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 function App() {
 
+  /**
+   * Generated states to be shared amongst entire applicaiton, predefined here
+   * Config is the default configurations of an object
+   * myObjects is to hold actual objects based upon the configurations
+   */
   const [configs, setConfigs] = useState([
     {
         id: 3,
@@ -29,18 +34,17 @@ function App() {
   ])
 
   const [myObjects, setMyObjects] = useState({"data":[
-    {
-      port: "4200",
-      id: "Random UUID",
-      title: "CyberTruck",
-      loc_x: "12",
-      loc_y: "13",
-      loc_z: "0",
-      random_param_38: "wowzers"
-    }
   ]})
 
+
+
+  /**
+   * Runs at the start of the applications to get configurations from the database
+   * and the get all the currently open object ports. This is so you only really have
+   * to open one server and stream data from multiple devices
+   */
   useEffect(() => {
+    //Get Configs
     axios.get('http://localhost:5000/getAllConfigs').then(response => {
       console.log("Connected with server!")
       console.log(response)
@@ -49,15 +53,19 @@ function App() {
       console.log("Error when connecting with server")
     })
 
+    //Get all open ports
     axios.get('http://localhost:8081/getAllObjectPorts').then(response => {
-          console.log(response)
-          var dataPoints = response["data"]
+          
+    var dataPoints = response["data"]
+          
           for(var i = 0; i < dataPoints.length; i++)
           {
             var port = dataPoints[i]["port"]
             var config_to_gen = dataPoints[i]["config"]
             const socket = new WebSocket('ws://localhost:' + port)
             config_to_gen["port"] = port
+
+            //Runs on socket open
             socket.addEventListener('open', function(event){
                 console.log("Connected to WS Server")
                 config_to_gen["port"] = port
@@ -65,28 +73,24 @@ function App() {
                 setMyObjects({"data": [...myObjects["data"], config_to_gen]})
             })
         
+            //Runs on socket message
             socket.addEventListener('message', function (event){
                 var temp_store = JSON.parse(event.data)
                 var temp_objects = myObjects["data"]
                 var item_index = temp_objects.findIndex(element => element.id === temp_store.id)
                 var newObjects = temp_objects
+                
                 if(item_index === -1)
-                {
                     newObjects.push(temp_store)
-                }
                 else
-                {
                     newObjects[item_index] = temp_store
-                }
                 
                 setMyObjects({"data": newObjects})
             })
           }
-
     }).catch(() => {
-      console.log("Error when connecting with server")
+      console.log("Error when trying to get ports")
     })
-
   }, [])
 
 

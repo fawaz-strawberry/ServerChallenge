@@ -7,11 +7,17 @@ import {v4 as uuidv4} from 'uuid';
 
 
 
-
+/**
+ * 
+ * @param {The selected configuration to open the form based on} selected 
+ * @returns 
+ */
 const ObjectForm = ({selected}) => {
   
+    //Configs that are currently loaded in(used to edit past configs)
     const {configs, setConfigs} = useContext(ConfigContext)
 
+    //Default form
     const [formEntry, setFormEntry] = useState({"data": [
         {key:"id", value: uuidv4()},
         {key:"title", value: "Test Title"},
@@ -20,11 +26,13 @@ const ObjectForm = ({selected}) => {
         {key:"loc_Z", value: "25"}
     ]})
 
-    const [removeFormEntry, setRemoveFormEntry] = useState({"data": [
+    //A form used when we want to eventually delete fields from forms
+    const [removeFormEntry, setRemoveFormEntry] = useState({"data": []})
 
-    ]})
 
-
+    //Runs on start to see if we want to load in a configuration
+    //from a current config or if we want a new one.
+    //Also preloads the values
     useEffect(() => {
         if(selected !== -1)
         {
@@ -48,11 +56,6 @@ const ObjectForm = ({selected}) => {
 
                 newForm.push({"key": myKeys[i], "value": configs[config_index][myKeys[i]]})
             }
-
-
-            console.log("Configs: --------- ")
-            console.log(configs)
-
             
             var index = newForm.findIndex((element, index) => {
                 if(element.key === "id")
