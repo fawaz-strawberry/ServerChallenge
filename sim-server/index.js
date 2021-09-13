@@ -49,7 +49,6 @@ class RandomObject {
 
             setInterval(() => {
                 ws.send(JSON.stringify(this.config))
-                this.config["loc_X"] = "" + (parseInt(this.config["loc_X"]) + 1)
             }, 500)
 
 
@@ -59,6 +58,9 @@ class RandomObject {
             })
         })
 
+        setInterval(() => {
+            this.config["loc_X"] = "" + (parseInt(this.config["loc_X"]) + 1)
+        }, 500)
         
 
         this.server.listen(this.myPort, () => console.log("Listening on port: " + this.myPort))

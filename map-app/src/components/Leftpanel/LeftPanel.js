@@ -33,7 +33,7 @@ const LeftPanel = () => {
             {console.log("Printing Objects")}
             {console.log(myObjects)}
             {myObjects["data"].map((element, index) => (
-              index !== 0 && <Box key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>
+              <Box key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>
             ))}
             
         </Canvas>
