@@ -1,8 +1,8 @@
 import React from 'react'
 
-const Box = () => {
+const Box = ({position}) => {
     return(
-        <mesh>
+        <mesh position={[position["x"], position["y"], position["z"]]}>
             <boxBufferGeometry attach="geometry"></boxBufferGeometry>
             <meshLambertMaterial attach="material" color="red"></meshLambertMaterial>
         </mesh>

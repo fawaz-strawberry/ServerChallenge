@@ -11,6 +11,7 @@ app.use(express.json())
 
 
 var connectedPorts = [3000, 3001, 3002, 3100]
+var all_object_ports = []
 var all_objects = []
 
 app.listen(8081, () => { console.log('Server is started on localhost:'+ (8081))})
@@ -73,12 +74,24 @@ class RandomObject {
 }
 
 
+app.get('/getAllObjectPorts', (req, res) => {
+    
+    var elements = []
+    
+    for(var i = 0; i < all_object_ports.length; i++)
+    {
+        elements.push({"port": all_object_ports[i], "config": all_objects[i].getConfig()})
+    }
+    res.send(elements)
+})
+
 app.get('/', (req, res) => res.send("Hello World!"))
 
 app.post("/addObject", (req, res) => {
     console.log(req.body)
     let sampleObj = new RandomObject(req.body)
     all_objects.push(sampleObj)
+    all_object_ports.push(sampleObj.getPort())
     res.send("" + sampleObj.getPort())
 })
 

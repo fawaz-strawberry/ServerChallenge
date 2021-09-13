@@ -42,13 +42,14 @@ const ObjectConfigs = ({setOpen, setSelect}) => {
                 console.log("Connected to WS Server")
                 config_to_gen["port"] = response["data"]
                 config_to_gen["key"] = config_to_gen["id"]
-                setMyObjects([...myObjects, config_to_gen])
+                setMyObjects({"data": [...myObjects["data"], config_to_gen]})
             })
         
             socket.addEventListener('message', function (event){
                 var temp_store = JSON.parse(event.data)
-                var item_index = myObjects.findIndex(element => element.id === temp_store.id)
-                var newObjects = myObjects
+                var temp_objects = myObjects["data"]
+                var item_index = temp_objects.findIndex(element => element.id === temp_store.id)
+                var newObjects = temp_objects
                 if(item_index === -1)
                 {
                     newObjects.push(temp_store)
@@ -58,7 +59,7 @@ const ObjectConfigs = ({setOpen, setSelect}) => {
                     newObjects[item_index] = temp_store
                 }
                 
-                setMyObjects(newObjects)
+                setMyObjects({"data": newObjects})
             })
 
         })

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import {useState} from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Box } from '../Box/Box'
 import { ObjectAdder } from '../ObjectAdder/ObjectAdder'
+import {ObjectContext} from '../../contexts/ObjectContext'
 import './style.css'
 
 // import * as THREE from 'three'
@@ -12,6 +13,7 @@ import './style.css'
 
 const LeftPanel = () => {
 
+  const {myObjects} = useContext(ObjectContext)
   const [panelOpen, setPanelOpen] = useState(false)
 
   return (
@@ -23,8 +25,13 @@ const LeftPanel = () => {
 
             <ambientLight intensity={0.5} />
             <spotLight position={[10, 15, 10]} angle={0.3} />
-
-            <Box/>
+            <Box position={{x: 0, y: 0, z: 0}}/>
+            {console.log("Printing Objects")}
+            {console.log(myObjects)}
+            {myObjects["data"].map((element, index) => (
+              index !== 0 && <Box key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>
+            ))}
+            
         </Canvas>
     </div>
   )
