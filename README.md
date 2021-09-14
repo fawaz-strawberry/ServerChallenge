@@ -83,6 +83,10 @@ Project Ideas (Updated):
         - Add, Grab, Remove Object Configs from the Database
         - Websocket connection to Simulation server for Object Data
         - Send REST API calls to simulation server to tell object to move or modify data
+    
+    NodeJS(Express) Backend
+        - Handles communications with mongoDB
+        - Handles requests from the ReactJS Server for Config functions
 
     MongoDB
         - Holds Configurations for all the different types of objects
@@ -115,3 +119,14 @@ Example Object:
         speed: 0,
         color: [45, 45, 45]
     }
+
+
+
+
+TODO:
+
+    - Modify location and other data through editing object data
+    - Better Map and navigation based on "destinations"
+    - Move Objects on map by dragging them, and update location realtime
+    - Make Buttons look nicer
+    - Zoom in on object selection with camera tracking
