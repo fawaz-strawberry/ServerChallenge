@@ -7,6 +7,7 @@ import {ObjectContext} from './contexts/ObjectContext'
 
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { CameraContext } from './contexts/CameraContext'
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
   const [myObjects, setMyObjects] = useState({"data":[
   ]})
 
+  const [cameraPos, setCameraPos] = useState([70, 200, 0])
 
 
   /**
@@ -66,10 +68,12 @@ function App() {
             config_to_gen["port"] = port
 
             //Runs on socket open
-            socket.addEventListener('open', function(event){
+            socket.addEventListener('open', (event) => {
                 console.log("Connected to WS Server")
                 config_to_gen["port"] = port
                 config_to_gen["key"] = config_to_gen["id"]
+                console.log("Opening config is: " + config_to_gen)
+                console.log(config_to_gen)
                 setMyObjects({"data": [...myObjects["data"], config_to_gen]})
             })
         
@@ -99,8 +103,10 @@ function App() {
     <div className="App">
       <ObjectContext.Provider value={{myObjects, setMyObjects}}>
       <ConfigContext.Provider value={{configs, setConfigs}}>
+      <CameraContext.Provider value={{cameraPos, setCameraPos}}>
         <RightPanel />
         <LeftPanel />
+      </CameraContext.Provider>
       </ConfigContext.Provider>
       </ObjectContext.Provider>
     </div>

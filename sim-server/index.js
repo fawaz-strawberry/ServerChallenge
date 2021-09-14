@@ -10,7 +10,7 @@ app.use(cors())
 app.use(express.json())
 
 
-var connectedPorts = [3000, 3001, 3002, 3100]
+var connectedPorts = [3000, 3001, 3100]
 var all_object_ports = []
 var all_objects = []
 
@@ -45,14 +45,23 @@ class RandomObject {
         this.wss.on('connection', (ws) => {
             console.log(this.config)
             console.log("A new client connected to: " + this.config["title"])
-            ws.send("Welcome New Client!")
-
+            
             setInterval(() => {
                 ws.send(JSON.stringify(this.config))
             }, 500)
 
 
-            ws.on('message', function incoming(message) {
+            ws.on('message', (message) => {
+                var result = JSON.parse(message)
+                console.log(result)
+                if(result.status === "UPDATE")
+                {
+                    this.config = result.data
+                }
+                else if(result.status === "DEATH")
+                {
+                    ws.close()
+                }
                 console.log("received: " + message)
                 ws.send("Got your message: " + message)
             })
@@ -111,7 +120,7 @@ wss.on('connection', function connection(ws) {
         ws.send("Got your message: " + message)
     })
 })
-server.listen(3001, () => console.log("Listening on port :3002"))
+server.listen(3001, () => console.log("Listening on port :3001"))
 
 
 

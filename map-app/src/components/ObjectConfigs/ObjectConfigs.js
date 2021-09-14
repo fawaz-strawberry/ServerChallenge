@@ -58,6 +58,8 @@ const ObjectConfigs = ({setOpen, setSelect}) => {
             const socket = new WebSocket('ws://localhost:' + response["data"])
             config_to_gen["port"] = response["data"]
             socket.addEventListener('open', function(event){
+                console.log("Event")
+                console.log(event)
                 console.log("Connected to WS Server")
                 config_to_gen["port"] = response["data"]
                 config_to_gen["key"] = config_to_gen["id"]
@@ -69,6 +71,7 @@ const ObjectConfigs = ({setOpen, setSelect}) => {
                 var temp_objects = myObjects["data"]
                 var item_index = temp_objects.findIndex(element => element.id === temp_store.id)
                 var newObjects = temp_objects
+                temp_store["port"] = response["data"]
                 if(item_index === -1)
                     newObjects.push(temp_store)
                 else

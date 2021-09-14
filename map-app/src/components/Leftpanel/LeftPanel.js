@@ -1,13 +1,18 @@
-import React, { useContext } from 'react'
-import {useState} from 'react'
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import React, { Suspense, useContext } from 'react'
+import {useState, useRef, useResource} from 'react'
+import { Canvas, useFrame, useThree} from '@react-three/fiber'
+import { MapControls, OrbitControls, PerspectiveCamera} from '@react-three/drei'
 import { Box } from '../Box/Box'
+import City from '../City/City'
+import {Camera} from '../Camera/Camera'
 import { ObjectAdder } from '../ObjectAdder/ObjectAdder'
 import {ObjectContext} from '../../contexts/ObjectContext'
+import {CameraContext} from '../../contexts/CameraContext'
 import './style.css'
 
-// import * as THREE from 'three'
+import * as THREE from 'three'
+import { Euler } from 'three'
+
 
 
 /**
@@ -16,26 +21,36 @@ import './style.css'
  */
 const LeftPanel = () => {
 
+
+  const lookAtCubePosition = new THREE.Vector3()
+  const ref = useRef()
+
+  const {cameraPos, setCameraPos} = useContext(CameraContext)
+
   //myobjects holds all objects to be rendered on screen
   const {myObjects} = useContext(ObjectContext)
   const [panelOpen, setPanelOpen] = useState(false)
 
+
+
+
   return (
     <div className="LeftPanel">
         <button onClick={() => {setPanelOpen(!panelOpen)}}className="NewObject">Add Object</button>
+        <button onClick={() => {setCameraPos([0, 200, 0])}}className="ResetCamera">Reset Camera</button>
         {panelOpen && <ObjectAdder/>}
-        <Canvas>
-            <OrbitControls/>
-
+        <Canvas camera={{ position: [0 , 100, 0], fov: 42 }}>
+        <Camera position={cameraPos}></Camera>
+            <Suspense>
             <ambientLight intensity={0.5} />
-            <spotLight position={[10, 15, 10]} angle={0.3} />
-            <Box position={{x: 0, y: 0, z: 0}}/>
-            {console.log("Printing Objects")}
-            {console.log(myObjects)}
+            <spotLight position={[10, 200, 10]} angle={0.95} />
+            <Box position={{x: 3, y: 0, z: 0}} />
+            <City></City>
             {myObjects["data"].map((element, index) => (
-              <Box key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>
+              <Box basePosition={cameraPos} key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>
             ))}
-            
+            </Suspense>
+
         </Canvas>
     </div>
   )
