@@ -9,12 +9,95 @@
 }
 
 .NewObject {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     z-index: 9999;
     position: absolute;
     display: block;
     float: left;
     margin-left: 50px;
     margin-top: 50px;
+    background-image: url(./add.png);
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    rotate: 0;
+    transition:all 0.5s ;
+    
+    -webkit-transition:all 0.5s ;
+    -o-transition:all 0.5s ;
+    -moz-transition:all 0.5s ;
+}
+
+.CloseObject {
+    width: 120px;
+    height: 120px;
+    z-index: 9999;
+    position: absolute;
+    display: block;
+    float: left;
+    margin-left: 50px;
+    margin-top: 50px;
+    background-image: url(./add.png);
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    transition:all 0.5s ;
+    -webkit-transition:all 0.5s ;
+    -o-transition:all 0.5s ;
+    -moz-transition:all 0.5s ;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.CloseObject:hover {
+    background-size: 120px 120px;
+    -webkit-transform: rotate(420deg);
+    -moz-transform: rotate(420deg);
+    -ms-transform: rotate(420deg);
+    -o-transform: rotate(420deg);
+    transform: rotate(420deg);
+}
+
+.NewObject:hover {
+    background-size: 120px 120px;
+    
+}
+
+.ResetCamera {
+    width: 120px;
+    height: 120px;
+    z-index: 9999;
+    left: 240px;
+    position: absolute;
+    display: block;
+    float: right;
+    margin-left: 50px;
+    margin-top: 50px;
+    background-image: url(./video-camera.png);
+    background-size: 100px 100px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    transition:all 0.5s ;
+    -webkit-transition:all 0.5s ;
+    -o-transition:all 0.5s ;
+    -moz-transition:all 0.5s ;
+}
+
+.ResetCamera:hover {
+    background-size: 120px 120px;
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    -o-transform: rotate(30deg);
+    transform: rotate(30deg);
 }

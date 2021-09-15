@@ -36,15 +36,16 @@ const LeftPanel = () => {
 
   return (
     <div className="LeftPanel">
-        <button onClick={() => {setPanelOpen(!panelOpen)}}className="NewObject">Add Object</button>
-        <button onClick={() => {setCameraPos([0, 200, 0])}}className="ResetCamera">Reset Camera</button>
+      
+        {!panelOpen ? <button onClick={(e) => {setPanelOpen(!panelOpen);}} className="NewObject"></button> :
+        <button onClick={(e) => {setPanelOpen(!panelOpen);}} className="CloseObject"></button>}
+        <button onClick={() => {setCameraPos([0, 200, 0])}}className="ResetCamera"></button>
         {panelOpen && <ObjectAdder/>}
         <Canvas camera={{ position: [0 , 100, 0], fov: 42 }}>
         <Camera position={cameraPos}></Camera>
             <Suspense>
             <ambientLight intensity={0.5} />
             <spotLight position={[10, 200, 10]} angle={0.95} />
-            <Box position={{x: 3, y: 0, z: 0}} />
             <City></City>
             {myObjects["data"].map((element, index) => (
               <Box basePosition={cameraPos} key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>

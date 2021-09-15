@@ -56,28 +56,48 @@ const ObjectConfigs = ({setOpen, setSelect}) => {
             console.log("Port to connect to is: " + response["data"])
             
             const socket = new WebSocket('ws://localhost:' + response["data"])
-            config_to_gen["port"] = response["data"]
+            // config_to_gen["port"] = response["data"]
             socket.addEventListener('open', function(event){
                 console.log("Event")
                 console.log(event)
                 console.log("Connected to WS Server")
-                config_to_gen["port"] = response["data"]
-                config_to_gen["key"] = config_to_gen["id"]
-                setMyObjects({"data": [...myObjects["data"], config_to_gen]})
             })
         
             socket.addEventListener('message', function (event){
-                var temp_store = JSON.parse(event.data)
-                var temp_objects = myObjects["data"]
-                var item_index = temp_objects.findIndex(element => element.id === temp_store.id)
-                var newObjects = temp_objects
-                temp_store["port"] = response["data"]
-                if(item_index === -1)
-                    newObjects.push(temp_store)
-                else
-                    newObjects[item_index] = temp_store
+
+                if(JSON.parse(event.data)["Order"] === 66)
+                {
+                    var myPort = JSON.parse(event.data)["Port"]
+                    socket.close()
+                    var newObjects = myObjects["data"]
+                    var item_index = newObjects.findIndex(element => element.port === myPort)
+                    
+                    console.log("Deleting: " + myPort)
+                    
+                    if(item_index === -1)
+                        console.log("ABORT MISSION WE'RE TRYING TO DELETE NOTHING")
+                    else
+                        newObjects.splice(item_index)
+                    
+                    console.log(newObjects)
                 
-                setMyObjects({"data": newObjects})
+                    setMyObjects({"data": newObjects})
+                }
+                else
+                {
+                    var temp_store = JSON.parse(event.data)["data"]
+                    var temp_objects = myObjects["data"]
+                    var item_index = temp_objects.findIndex(element => element.id === temp_store.id)
+                    var newObjects = temp_objects
+                    temp_store["port"] = JSON.parse(event.data)["port"]
+                    if(item_index === -1)
+                        newObjects.push(temp_store)
+                    else
+                        newObjects[item_index] = temp_store
+                    
+                    setMyObjects({"data": newObjects})
+                }
+
             })
 
         })
@@ -91,12 +111,12 @@ const ObjectConfigs = ({setOpen, setSelect}) => {
         {configs.map((config, index) => (
             <>
                 <div className="Config" key={config.title}>
-                    <div className="Logo">IMG</div>
+                    <div className="Logo"><img src="/SpinningCube.gif"/></div>
                     <div className="Title">{config.title}</div>
                     <div className="Details"></div>
-                    <button onClick={() => {generateObject(config);}}>Generate Object</button>
-                    <button onClick={() => {setSelect(config.id); setOpen(true)}}>Edit Config</button>
-                    <button onClick={() => {deleteConfig(config._id)}}>Delete Config</button>
+                    <img src="/plus.png" width={50} height={50} className="ButtonIcon" onClick={() => {generateObject(config);}}></img>
+                    <img src="/edit2.png" width={50} height={50} className="ButtonIcon" onClick={() => {setSelect(config.id); setOpen(true)}}></img>
+                    <img src="/trash.png" width={50} height={50} className="ButtonIcon" onClick={() => {deleteConfig(config._id)}}></img>
                 </div>
                 
             </>

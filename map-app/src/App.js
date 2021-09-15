@@ -58,8 +58,7 @@ function App() {
     //Get all open ports
     axios.get('http://localhost:8081/getAllObjectPorts').then(response => {
           
-    var dataPoints = response["data"]
-          
+         var dataPoints = response["data"]
           for(var i = 0; i < dataPoints.length; i++)
           {
             var port = dataPoints[i]["port"]
@@ -70,26 +69,42 @@ function App() {
             //Runs on socket open
             socket.addEventListener('open', (event) => {
                 console.log("Connected to WS Server")
-                config_to_gen["port"] = port
-                config_to_gen["key"] = config_to_gen["id"]
-                console.log("Opening config is: " + config_to_gen)
-                console.log(config_to_gen)
-                setMyObjects({"data": [...myObjects["data"], config_to_gen]})
             })
         
             //Runs on socket message
             socket.addEventListener('message', function (event){
-                var temp_store = JSON.parse(event.data)
-                var temp_objects = myObjects["data"]
-                var item_index = temp_objects.findIndex(element => element.id === temp_store.id)
-                var newObjects = temp_objects
-                
-                if(item_index === -1)
-                    newObjects.push(temp_store)
-                else
-                    newObjects[item_index] = temp_store
-                
-                setMyObjects({"data": newObjects})
+              if(JSON.parse(event.data).Order === 66)
+              {
+                  var myPort = JSON.parse(event.data).Port
+                  socket.close()
+                  var newObjects = myObjects["data"]
+                  var item_index = newObjects.findIndex(element => element.port === myPort)
+                  
+                  console.log("Deleting: " + myPort)
+                  
+                  if(item_index === -1)
+                      console.log("ABORT MISSION WE'RE TRYING TO DELETE NOTHING")
+                  else
+                      newObjects.splice(item_index)
+                  
+                  console.log(newObjects)
+              
+                  setMyObjects({"data": newObjects})
+              }
+              else
+              {
+                  var temp_store = JSON.parse(event.data)["data"]
+                  var temp_objects = myObjects["data"]
+                  var item_index = temp_objects.findIndex(element => element.id === temp_store.id)
+                  var newObjects = temp_objects
+                  temp_store["port"] = JSON.parse(event.data)["port"]
+                  if(item_index === -1)
+                      newObjects.push(temp_store)
+                  else
+                      newObjects[item_index] = temp_store
+                  
+                  setMyObjects({"data": newObjects})
+              }
             })
           }
     }).catch(() => {

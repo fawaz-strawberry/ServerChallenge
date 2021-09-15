@@ -2,7 +2,7 @@
     width: 94%;
     height: 70px;
     left: 2%;
-    background-color: lightslategray;
+    background-color: rgb(255, 197, 197);
     margin:auto;
     margin-top: 10px;
     border-radius: 2px;
@@ -28,6 +28,25 @@
     background-color: whitesmoke;
     font-size: 20px;
     font-weight: bold;
+}
+
+.ButtonIcon {
+    transition:all 0.5s ;
+    -webkit-transition:all 0.5s ;
+    -o-transition:all 0.5s ;
+    -moz-transition:all 0.5s ;
+    position: relative;
+    margin-top: 5px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.ButtonIcon:hover{
+    -webkit-transform: rotate(30deg);
+    -moz-transform: rotate(30deg);
+    -ms-transform: rotate(30deg);
+    -o-transform: rotate(30deg);
+    transform: rotate(30deg);
 }
 
 

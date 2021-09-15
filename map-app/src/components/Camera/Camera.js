@@ -1,5 +1,6 @@
 import { useFrame } from '@react-three/fiber'
 import React, {useState, useRef, useContext}  from 'react'
+import {ObjectContext} from '../../contexts/ObjectContext'
 import * as THREE from 'three'
 import { Euler } from 'three'
 /**
@@ -12,7 +13,8 @@ import { Euler } from 'three'
 const Camera = ({position, v=new THREE.Vector3(), c = new THREE.Color()}) => {
 
     const ref = useRef()
-  
+    
+
     useFrame((state, delta) => {
       
         const step = delta * 10

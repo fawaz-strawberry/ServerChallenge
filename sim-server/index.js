@@ -47,23 +47,43 @@ class RandomObject {
             console.log("A new client connected to: " + this.config["title"])
             
             setInterval(() => {
-                ws.send(JSON.stringify(this.config))
+                ws.send(JSON.stringify({"data" : this.config, "port": this.myPort}))
             }, 500)
 
 
             ws.on('message', (message) => {
                 var result = JSON.parse(message)
                 console.log(result)
+                console.log("Before")
                 if(result.status === "UPDATE")
                 {
                     this.config = result.data
                 }
                 else if(result.status === "DEATH")
                 {
-                    ws.close()
+                    // First sweep, soft close
+                    this.wss.clients.forEach((socket) => {
+                        socket.send(JSON.stringify({"Order": 66, "Port":this.myPort}))
+                        socket.close();
+                    });
+                    
+                    console.log(all_objects)
+                    for(var i = 0; i < all_objects.length; i++)
+                    {
+                        console.log(all_objects[i].getPort() + " " + this.myPort)
+                        if(all_objects[i].getPort() === this.myPort)
+                        {
+                            all_objects.splice(i)
+                            all_object_ports.splice(i)
+                            break
+                        }
+                    }
+
+
                 }
+                console.log(all_objects)
+                console.log("after")
                 console.log("received: " + message)
-                ws.send("Got your message: " + message)
             })
         })
 
@@ -89,9 +109,9 @@ app.get('/getAllObjectPorts', (req, res) => {
     
     var elements = []
     
-    for(var i = 0; i < all_object_ports.length; i++)
+    for(var i = 0; i < all_objects.length; i++)
     {
-        elements.push({"port": all_object_ports[i], "config": all_objects[i].getConfig()})
+        elements.push({"port": all_objects[i].getPort(), "config": all_objects[i].getConfig()})
     }
     res.send(elements)
 })
