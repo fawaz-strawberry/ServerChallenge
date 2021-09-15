@@ -128,9 +128,6 @@ Example Object:
 
 
 TODO:
-
-    - Modify location and other data through editing object data
-    - Better Map and navigation based on "destinations"
+    - Better Map and navigation based on "destinations" and then different models!
     - Move Objects on map by dragging them, and update location realtime
-    - Make Buttons look nicer
-    - Zoom in on object selection with camera tracking
+    - Camera tracking
