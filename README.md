@@ -128,6 +128,8 @@ Example Object:
 
 
 TODO:
+
+    - Send notification if data goes beyond certain threshhold 
     - Better Map and navigation based on "destinations" and then different models!
     - Move Objects on map by dragging them, and update location realtime
     - Camera tracking
