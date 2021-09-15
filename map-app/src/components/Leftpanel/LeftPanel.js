@@ -32,8 +32,6 @@ const LeftPanel = () => {
   const [panelOpen, setPanelOpen] = useState(false)
 
 
-
-
   return (
     <div className="LeftPanel">
       

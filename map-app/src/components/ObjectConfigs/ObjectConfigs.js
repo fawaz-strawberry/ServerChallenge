@@ -32,12 +32,12 @@ const ObjectConfigs = ({setOpen, setSelect}) => {
                 axios.get('http://localhost:5000/getAllConfigs').then(response2 => {
                     console.log("Connected with server!")
                     setConfigs(response2.data)
-                  }).catch(() => {
+                }).catch(() => {
                     console.log("Error when connecting with server")
-                  })
-              }).catch(() => {
+                })
+            }).catch(() => {
                 console.log("Error when connecting with server")
-              })
+            })
         }
     }
 
@@ -51,52 +51,52 @@ const ObjectConfigs = ({setOpen, setSelect}) => {
      * @param {The configuration of the object you want to generate} config_to_gen 
      */
     function generateObject(config_to_gen){
-        axios.post('http://localhost:8081/addObject', config_to_gen).then(response => {
-            
-            console.log("Port to connect to is: " + response["data"])
-            
-            const socket = new WebSocket('ws://localhost:' + response["data"])
-            // config_to_gen["port"] = response["data"]
-            socket.addEventListener('open', function(event){
-                console.log("Event")
-                console.log(event)
-                console.log("Connected to WS Server")
-            })
-        
-            socket.addEventListener('message', function (event){
 
-                if(JSON.parse(event.data)["Order"] === 66)
-                {
-                    var myPort = JSON.parse(event.data)["Port"]
-                    socket.close()
-                    var newObjects = myObjects["data"]
-                    var item_index = newObjects.findIndex(element => element.port === myPort)
-                    
-                    console.log("Deleting: " + myPort)
-                    
-                    if(item_index === -1)
-                        console.log("ABORT MISSION WE'RE TRYING TO DELETE NOTHING")
-                    else
-                        newObjects.splice(item_index)
-                    
-                    console.log(newObjects)
+            //Post request to add new object to the sim server based on the configuration
+            //that was selected
+            axios.post('http://localhost:8081/addObject', config_to_gen).then(response => {
+            
+                console.log("Port to connect to is: " + response["data"])
                 
-                    setMyObjects({"data": newObjects})
-                }
-                else
-                {
-                    var temp_store = JSON.parse(event.data)["data"]
-                    var temp_objects = myObjects["data"]
-                    var item_index = temp_objects.findIndex(element => element.id === temp_store.id)
-                    var newObjects = temp_objects
-                    temp_store["port"] = JSON.parse(event.data)["port"]
-                    if(item_index === -1)
-                        newObjects.push(temp_store)
-                    else
-                        newObjects[item_index] = temp_store
+                const socket = new WebSocket('ws://localhost:' + response["data"])
+                socket.addEventListener('open', function(event){
+                    console.log("Connected to WS Server")
+                })
+        
+                socket.addEventListener('message', function (event){
                     
-                    setMyObjects({"data": newObjects})
-                }
+                    //If Order is found and it's equal to 66 then kill the port and delete the object
+                    //from the if statement
+                    //Otherwise add the new object to the list of currently connected objects
+                    if(JSON.parse(event.data)["Order"] === 66)
+                    {
+                        socket.close()
+                        var myPort = JSON.parse(event.data)["Port"]
+                        var newObjects = myObjects["data"]
+                        var item_index = newObjects.findIndex(element => element.port === myPort)
+                        
+                        console.log("Deleting: " + myPort)
+                        
+                        if(item_index === -1)
+                            console.log("ABORT MISSION WE'RE TRYING TO DELETE NOTHING")
+                        else
+                            newObjects.splice(item_index)
+                    
+                        setMyObjects({"data": newObjects})
+                    }
+                    else
+                    {
+                        var temp_store = JSON.parse(event.data)["data"]
+                        var newObjects = myObjects["data"]
+                        var item_index = newObjects.findIndex(element => element.id === temp_store.id)
+                        temp_store["port"] = JSON.parse(event.data)["port"]
+                        if(item_index === -1)
+                            newObjects.push(temp_store)
+                        else
+                            newObjects[item_index] = temp_store
+                        
+                        setMyObjects({"data": newObjects})
+                    }
 
             })
 

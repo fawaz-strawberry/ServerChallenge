@@ -6,8 +6,8 @@ import { Euler } from 'three'
 /**
  * 
  * @param {Position} and x, y, z object which holds the coordinates of where
- * to generate the cube 
- * @returns The box :/
+ * to move camera
+ * @returns The Camera with lerp settings to jump around the map! :/
  */
 
 const Camera = ({position, v=new THREE.Vector3(), c = new THREE.Color()}) => {

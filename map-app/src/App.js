@@ -34,9 +34,7 @@ function App() {
     }
   ])
 
-  const [myObjects, setMyObjects] = useState({"data":[
-  ]})
-
+  const [myObjects, setMyObjects] = useState({"data":[]})
   const [cameraPos, setCameraPos] = useState([70, 200, 0])
 
 
@@ -46,7 +44,8 @@ function App() {
    * to open one server and stream data from multiple devices
    */
   useEffect(() => {
-    //Get Configs
+
+    //Get the Current Configs
     axios.get('http://localhost:5000/getAllConfigs').then(response => {
       console.log("Connected with server!")
       console.log(response)
@@ -55,23 +54,28 @@ function App() {
       console.log("Error when connecting with server")
     })
 
-    //Get all open ports
+    //Get all currently open ports for all objects
     axios.get('http://localhost:8081/getAllObjectPorts').then(response => {
           
-         var dataPoints = response["data"]
+          //loop through data points
+          var dataPoints = response["data"]
           for(var i = 0; i < dataPoints.length; i++)
           {
+
             var port = dataPoints[i]["port"]
             var config_to_gen = dataPoints[i]["config"]
             const socket = new WebSocket('ws://localhost:' + port)
             config_to_gen["port"] = port
 
-            //Runs on socket open
+            //Runs on socket open, doesn't do anything special might delete later :/
             socket.addEventListener('open', (event) => {
                 console.log("Connected to WS Server")
             })
         
-            //Runs on socket message
+
+            //Runs on socket message, Set the responses based on the event set from port
+            //when Order 66 is sent then delete, otherwise add to objects the port and data
+            //configuration that it comes with
             socket.addEventListener('message', function (event){
               if(JSON.parse(event.data).Order === 66)
               {

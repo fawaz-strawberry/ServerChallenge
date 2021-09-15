@@ -12,6 +12,7 @@ import ObjectForm from '../ObjectForm/ObjectForm'
  */
 const ObjectAdder = () => {
 
+  //Configurator form control
   const [openConfig, setOpenConfig] = useState(false)
   const [selectedConfig, setSelectedConfig] = useState(-1)
 

@@ -30,9 +30,12 @@ const ObjectForm = ({selected}) => {
     const [removeFormEntry, setRemoveFormEntry] = useState({"data": []})
 
 
-    //Runs on start to see if we want to load in a configuration
-    //from a current config or if we want a new one.
-    //Also preloads the values
+
+    /**
+     * Runs on start to see if we want to load in a configuration
+     * from a current config or if we want a new one.
+     * Also preloads the values
+     */
     useEffect(() => {
         if(selected !== -1)
         {
@@ -41,7 +44,6 @@ const ObjectForm = ({selected}) => {
             let config_index = 0
             for(var i = 0; i < configs.length; i++)
             {
-
                 if(configs[i]["id"] === selected + "")
                 {
                     config_index = i
@@ -70,22 +72,45 @@ const ObjectForm = ({selected}) => {
             newForm[index].value = selected
             setFormEntry({"data" : newForm})
         }
-        else{
-            
-        }
     }, [])
 
+
+
+    /**
+     * Add a new field to configurate! And check that the field isn't
+     * empty and not already created
+     */
     function addField()
     {
         var input = document.getElementsByClassName("NewFieldName")[0].value
-        if(input !== "")
+        var isValid = true
+        for(var i = 0; i < formEntry.data.length; i++)
+        {
+            if(formEntry.data[i].key === input)
+            {
+                isValid = false
+                break
+            }
+        }
+
+        if(input !== "" && isValid)
         {
             let newForm = {"key": input, "value": ""}
             var temp_form = {"data": [...formEntry.data, newForm]}
             setFormEntry(temp_form)  
         }
+        else
+        {
+            window.alert("Invalid entry: " + input)
+        }
     }
 
+
+
+    /**
+     * Deletes a field in the configuration process
+     * @param {The field to delete} fieldName 
+     */
     function deleteField(fieldName)
     {
         var temp_form = formEntry["data"]
@@ -102,9 +127,15 @@ const ObjectForm = ({selected}) => {
         }
 
         setFormEntry({"data": temp_form})
-        
     }
 
+
+
+    /**
+     * Submit configuration, either with editing or adding the
+     * configuration. Based upon whether or not selected is true or
+     * false which is determined by initial button press
+     */
     function submitConfig()
     {
         console.log(formEntry)
@@ -127,11 +158,15 @@ const ObjectForm = ({selected}) => {
               }).catch(error => {
                 console.log("Error when connecting with server")
               })
-        }
-
-            
+        }            
     }
 
+
+    /**
+     * Modify input of input fields when text is changing
+     * @param {the whole event} e 
+     * @param {Target of what to modify} targ 
+     */
     function modifyInput(e, targ)
     {
         let newForm = formEntry["data"]
@@ -146,10 +181,9 @@ const ObjectForm = ({selected}) => {
                 return false
             }
         })
-        console.log(index)
+
         var my_value = e.target.value
         newForm[index].value = my_value
-        // console.log("I want to change to: " + e.target.value)
         setFormEntry({"data": newForm})
 
     }

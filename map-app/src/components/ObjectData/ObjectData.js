@@ -12,27 +12,33 @@ const ObjectData = ({myConfig}) => {
   const {cameraPos, setCameraPos} = useContext(CameraContext)
   const {myObjects, setMyObjects} = useContext(ObjectContext)
 
+  
+  /**
+   * When typing in a field, update based on the value of the copy configed
+   * @param {value to change to} val 
+   * @param {field to change in} field 
+   */
   function updateField(val, field) {
     var copyConfig = updatedConfig
     copyConfig[field] = val
     setUpdatedConfig(copyConfig)
   }
 
+
+  
+  /**
+  * Take the inputs given by the users on the edit and send an update
+  * on the port to the configuration server. It's pretty slick :)
+  */
   function saveObjectData(){
     
-
-    console.log(updatedConfig)
     var myPort = updatedConfig.port
-
+    
     if(myPort === undefined)
     {
       myPort = 3002
     }
-
-    console.log("Sending: ")
-    console.log(updatedConfig)
-    console.log("To port " + myPort)
-
+    
     const socket = new WebSocket('ws://localhost:' + myPort)
 
     //Runs on socket open
@@ -41,28 +47,29 @@ const ObjectData = ({myConfig}) => {
         var dataToSend = updatedConfig
         delete dataToSend.port
         socket.send(JSON.stringify({"data": dataToSend, "status": "UPDATE"}))
+        updatedConfig.port = myPort
+        socket.close()
     })
-
-
     setInEditMode(false)
-
   }
 
+
+
+  /**
+   * This funciton gets the port and then deletes the object based upon
+   * that number closing the port in the process. 
+   */
   function deleteObjectData(){
-    console.log(updatedConfig)
+    
     var myPort = updatedConfig.port
 
+    //bandage fix DELETE LATER
     if(myPort === undefined)
     {
       myPort = 3002
     }
 
-    console.log("Sending: ")
-    console.log(updatedConfig)
-    console.log("To port " + myPort)
-
     const socket = new WebSocket('ws://localhost:' + myPort)
-
     var newObjects = myObjects["data"]
     var item_index = newObjects.findIndex(element => element.port === myPort)
     
@@ -72,8 +79,6 @@ const ObjectData = ({myConfig}) => {
         console.log("ABORT MISSION WE'RE TRYING TO DELETE NOTHING")
     else
         newObjects.splice(item_index)
-    
-    console.log(newObjects)
 
     setMyObjects({"data": newObjects})
 
@@ -86,14 +91,24 @@ const ObjectData = ({myConfig}) => {
         socket.close()
     })
 
-
     setInEditMode(false)
   }
 
+
+
+
+
+  /**
+   * Set the camera position if an item
+   * is clicked on
+   */
   function goToObject(){
-    console.log("Setting to")
     setCameraPos([parseInt(myConfig["loc_X"]), parseInt(myConfig["loc_Y"]) + 20, parseInt(myConfig["loc_Z"])])
   }
+
+
+
+
 
   return (
     <div className="Element" onClick={() => {goToObject()}}>
