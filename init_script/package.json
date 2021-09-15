@@ -1,0 +1,22 @@
+{
+  "name": "initialize",
+  "version": "1.0.0",
+  "description": "initialize database and maybe otherthings",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fawaz-strawberry/TeslaChallenge.git"
+  },
+  "author": "Fawaz Mujtaba",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fawaz-strawberry/TeslaChallenge/issues"
+  },
+  "homepage": "https://github.com/fawaz-strawberry/TeslaChallenge#readme",
+  "dependencies": {
+    "mongodb": "^4.1.2"
+  }
+}

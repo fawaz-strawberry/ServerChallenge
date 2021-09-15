@@ -17,15 +17,8 @@
     float: left;
     margin-left: 50px;
     margin-top: 50px;
-    background-image: url(./add.png);
-    background-size: 100px 100px;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-color: rgba(0, 0, 0, 0);
     border: none;
-    rotate: 0;
     transition:all 0.5s ;
-    
     -webkit-transition:all 0.5s ;
     -o-transition:all 0.5s ;
     -moz-transition:all 0.5s ;
@@ -40,11 +33,6 @@
     float: left;
     margin-left: 50px;
     margin-top: 50px;
-    background-image: url(./add.png);
-    background-size: 100px 100px;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-color: rgba(0, 0, 0, 0);
     border: none;
     transition:all 0.5s ;
     -webkit-transition:all 0.5s ;
@@ -67,7 +55,11 @@
 }
 
 .NewObject:hover {
-    background-size: 120px 120px;
+    width: 130px;
+    height: 130px;
+    margin-left: 45px;
+    margin-top: 45px;
+
     
 }
 
@@ -81,11 +73,6 @@
     float: right;
     margin-left: 50px;
     margin-top: 50px;
-    background-image: url(./video-camera.png);
-    background-size: 100px 100px;
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-color: rgba(0, 0, 0, 0);
     border: none;
     transition:all 0.5s ;
     -webkit-transition:all 0.5s ;

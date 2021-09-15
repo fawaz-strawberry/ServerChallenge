@@ -37,9 +37,9 @@ const LeftPanel = () => {
   return (
     <div className="LeftPanel">
       
-        {!panelOpen ? <button onClick={(e) => {setPanelOpen(!panelOpen);}} className="NewObject"></button> :
-        <button onClick={(e) => {setPanelOpen(!panelOpen);}} className="CloseObject"></button>}
-        <button onClick={() => {setCameraPos([0, 200, 0])}}className="ResetCamera"></button>
+        {!panelOpen ? <img width={120} height={120} src="/add.png" onClick={(e) => {setPanelOpen(!panelOpen);}} className="NewObject"></img> :
+        <img width={120} height={120} src="/add.png" onClick={(e) => {setPanelOpen(!panelOpen);}} className="CloseObject"></img>}
+        <img width={120} height={120} src="/video-camera.png" onClick={() => {setCameraPos([0, 200, 0])}} className="ResetCamera"></img>
         {panelOpen && <ObjectAdder/>}
         <Canvas camera={{ position: [0 , 100, 0], fov: 42 }}>
         <Camera position={cameraPos}></Camera>
