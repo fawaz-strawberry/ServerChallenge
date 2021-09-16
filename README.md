@@ -20,6 +20,9 @@ Project Ideas (Updated):
         - Cadence of 500ms per object
 
 
+Note: Project Built on Windows Machine
+
+
 <!-- Deprecated Project Ideas:
 
     Frontend Utilizing ReactJS for live updates on data
