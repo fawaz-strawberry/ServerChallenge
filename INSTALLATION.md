@@ -12,10 +12,11 @@ https://nodejs.org/en/download/
 
 6) Run "node ./init_script/mongoDB_init.js" to initialize database and collection
 
-7) Run "npm --prefix backend-server/ install"
-8) Run "npm --prefix map-app/ install"
-9) Run "npm --prefix sim-server/ install"
+In three seperate terminals
+7) Run "npm install" in './backend-server' and then 'npm start'
+8) Run "npm install" in './sim-server' and then 'npm start'
+9) Run "npm install" in './map-app' and then 'npm start'
 
-10) Run "npm --prefix sim-server/ start" to start simulation server
-11) Run "npm --prefix backend-server/ start" to start up DBServer
-12) Run "npm --prefix map-app/ start" to start up React App
+
+7 8 9 :)
+
