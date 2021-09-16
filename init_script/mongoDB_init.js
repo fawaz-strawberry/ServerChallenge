@@ -10,7 +10,7 @@ MongoClient.connect(url, function(err, db) {
     var dbo = db.db("TeslaDB");
     var myobj = [
       { id: "007", title: 'CyberTruck', loc_X: '0', loc_Y: '0', loc_Z: '-7', speed: '12'},
-      { id: "110100100", title: 'SampleBox', loc_X: '0', loc_Y: '0', loc_Z: '0'},
+      { id: "110100100", title: 'F15', loc_X: '0', loc_Y: '0', loc_Z: '0'},
     ];
     dbo.collection("ObjConfigs").insertMany(myobj, function(err, res) {
       if (err) throw err;

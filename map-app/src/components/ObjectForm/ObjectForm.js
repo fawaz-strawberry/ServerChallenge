@@ -12,7 +12,7 @@ import {v4 as uuidv4} from 'uuid';
  * @param {The selected configuration to open the form based on} selected 
  * @returns 
  */
-const ObjectForm = ({selected}) => {
+const ObjectForm = ({selected, setPanel}) => {
   
     //Configs that are currently loaded in(used to edit past configs)
     const {configs, setConfigs} = useContext(ConfigContext)
@@ -145,6 +145,7 @@ const ObjectForm = ({selected}) => {
                 console.log("Updating Configuration To Server")
                 console.log(response.data)
                 setConfigs(response.data)
+                setPanel(false)
               }).catch(error => {
                 console.log("Error when connecting with server")
               })
@@ -155,9 +156,11 @@ const ObjectForm = ({selected}) => {
                 console.log("Adding Configuration To Server")
                 console.log(response.data)
                 setConfigs(response.data)
+                setPanel(false)
               }).catch(error => {
                 console.log("Error when connecting with server")
               })
+              
         }            
     }
 

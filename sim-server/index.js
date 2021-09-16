@@ -142,7 +142,7 @@ class RandomObject {
                 this.config["loc_Z"] = "" + (parseInt(this.config["loc_Z"]) - zSpeed)
             }, 500)
         }
-        else if(this.config["title"] === "SampleBox")
+        else if(this.config["title"] === "F15")
         {
             setInterval(() => {
                 this.config["loc_X"] = "" + (parseInt(this.config["loc_X"]) + 20 * (Math.random() - .5))

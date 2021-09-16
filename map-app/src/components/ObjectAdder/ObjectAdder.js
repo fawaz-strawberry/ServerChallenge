@@ -21,7 +21,7 @@ const ObjectAdder = () => {
         <br></br>
         <h2 className="PanelTitle">{openConfig ? "Enter Config Values" : "Select Object To Add"}</h2>
         <div>
-          {openConfig ? <ObjectForm selected={selectedConfig}/> : <ObjectConfigs setOpen={setOpenConfig} setSelect={setSelectedConfig}/>}
+          {openConfig ? <ObjectForm selected={selectedConfig} setPanel={setOpenConfig}/> : <ObjectConfigs setOpen={setOpenConfig} setSelect={setSelectedConfig}/>}
           
         </div>
         <button onClick={()=>{setOpenConfig(!openConfig); setSelectedConfig(-1)}}className="AddNew">{openConfig ? "Cancel" : "Add New Object Configuration"}</button>

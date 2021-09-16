@@ -9,6 +9,7 @@ import { ObjectAdder } from '../ObjectAdder/ObjectAdder'
 import {ObjectContext} from '../../contexts/ObjectContext'
 import {CameraContext} from '../../contexts/CameraContext'
 import NotSoCyberTruckTruck from '../CyberTruck/NotSoCyberTruckTruck'
+import F15Ver2 from '../F15Ver2/F15Ver2'
 import './style.css'
 
 import * as THREE from 'three'
@@ -72,8 +73,9 @@ const LeftPanel = () => {
             {myObjects["data"].map((element, index) => (
               element["title"] === "CyberTruck" ? 
               <NotSoCyberTruckTruck key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>
-              : <Box key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>
-            ))}
+              : element["title"] === "F15" ?  <F15Ver2 position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}></F15Ver2> : 
+              <Box key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/> 
+             ))}
             </Suspense>
 
         </Canvas>
