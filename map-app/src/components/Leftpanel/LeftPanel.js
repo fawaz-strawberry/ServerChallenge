@@ -8,6 +8,7 @@ import {Camera} from '../Camera/Camera'
 import { ObjectAdder } from '../ObjectAdder/ObjectAdder'
 import {ObjectContext} from '../../contexts/ObjectContext'
 import {CameraContext} from '../../contexts/CameraContext'
+import NotSoCyberTruckTruck from '../CyberTruck/NotSoCyberTruckTruck'
 import './style.css'
 
 import * as THREE from 'three'
@@ -30,6 +31,29 @@ const LeftPanel = () => {
   //myobjects holds all objects to be rendered on screen
   const {myObjects} = useContext(ObjectContext)
   const [panelOpen, setPanelOpen] = useState(false)
+  const [camNum, setCamNum] = useState(0)
+
+  function switchCamera(num)
+  {
+    if(num === 0)
+    {
+      setCameraPos([0, 200, 0])
+    }
+    if(num === 1)
+    {
+      setCameraPos([0, 300, 0])
+    }
+
+    if(camNum == 1)
+    {
+      setCamNum(0)
+    }
+    else
+    {
+      setCamNum(camNum + 1)
+    }
+
+  }
 
 
   return (
@@ -37,16 +61,18 @@ const LeftPanel = () => {
       
         {!panelOpen ? <img width={120} height={120} src="/add.png" onClick={(e) => {setPanelOpen(!panelOpen);}} className="NewObject"></img> :
         <img width={120} height={120} src="/add.png" onClick={(e) => {setPanelOpen(!panelOpen);}} className="CloseObject"></img>}
-        <img width={120} height={120} src="/video-camera.png" onClick={() => {setCameraPos([0, 200, 0])}} className="ResetCamera"></img>
+        <img width={120} height={120} src="/video-camera.png" onClick={() => {switchCamera(camNum); }} className="ResetCamera"></img>
         {panelOpen && <ObjectAdder/>}
-        <Canvas camera={{ position: [0 , 100, 0], fov: 42 }}>
+        <Canvas camera={{ position: [0 , 200, 0], fov: 75 }}>
         <Camera position={cameraPos}></Camera>
             <Suspense>
             <ambientLight intensity={0.5} />
             <spotLight position={[10, 200, 10]} angle={0.95} />
             <City></City>
             {myObjects["data"].map((element, index) => (
-              <Box basePosition={cameraPos} key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>
+              element["title"] === "CyberTruck" ? 
+              <NotSoCyberTruckTruck key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>
+              : <Box key={element["id"]} position={{x: parseInt(element["loc_X"]), y: parseInt(element["loc_Y"]), z: parseInt(element["loc_Z"])}}/>
             ))}
             </Suspense>
 

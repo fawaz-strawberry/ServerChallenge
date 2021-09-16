@@ -81,9 +81,78 @@ class RandomObject {
             })
         })
 
-        setInterval(() => {
-            this.config["loc_X"] = "" + (parseInt(this.config["loc_X"]) + 1)
-        }, 500)
+        if(this.config["title"] === "CyberTruck")
+        {
+            var speed = 1
+            if(this.config["speed"])
+            {
+                speed = this.config["speed"]
+            }
+            
+            this.hSpeed = 0
+            this.vSpeed = 0
+
+            this.isGoingRight = true
+            this.isGoingUp = false
+            this.isGoingLeft = false
+            this.isGoingDown = false
+
+            this.destinations = [{"x":0, "z":0}, {"x":35, "z":0}, {"x":35, "z":20}, {"x":60, "z":20}, {"x":120, "z":10}, {"x":120, "z":-15}, {"x":165, "z":-15}, {"x":165, "z":-66}, {"x":0, "z":-66}]
+            this.curr = 0
+            setInterval(() => {
+                var xSpeed = parseInt(this.config["loc_X"]) - this.destinations[this.curr]["x"]
+                var zSpeed = parseInt(this.config["loc_Z"]) - this.destinations[this.curr]["z"]
+
+                if(xSpeed > 1)
+                    if(xSpeed > this.config["speed"])
+                        xSpeed = 1 * this.config["speed"]
+                    else
+                        xSpeed = 1
+                else if(xSpeed < -1)
+                    if(xSpeed < -this.config["speed"])
+                        xSpeed = -1 * this.config["speed"]
+                    else
+                        xSpeed = -1
+                else
+                    xSpeed = 0
+
+                if(zSpeed > 1)
+                    if(zSpeed > this.config["speed"])
+                        zSpeed = 1 * this.config["speed"]
+                    else
+                        zSpeed = 1
+                else if(zSpeed < -1)
+                    if(zSpeed < -this.config["speed"])
+                        zSpeed = -1 * this.config["speed"]
+                    else
+                        zSpeed = -1
+                else
+                    zSpeed = 0
+
+                if(xSpeed + zSpeed === 0)
+                {
+                    this.curr += 1
+                    if(this.curr >= this.destinations.length)
+                    {
+                        this.curr = 0
+                    }
+                }
+        
+                this.config["loc_X"] = "" + (parseInt(this.config["loc_X"]) - xSpeed)
+                this.config["loc_Z"] = "" + (parseInt(this.config["loc_Z"]) - zSpeed)
+            }, 500)
+        }
+        else if(this.config["title"] === "SampleBox")
+        {
+            setInterval(() => {
+                this.config["loc_X"] = "" + (parseInt(this.config["loc_X"]) + 20 * (Math.random() - .5))
+                this.config["loc_Z"] = "" + (parseInt(this.config["loc_Z"]) + 20 * (Math.random() - .5))
+            }, 500)
+        }
+        else
+        {
+        }
+        
         
         this.server.listen(this.myPort, () => console.log("Listening on port: " + this.myPort))
     }

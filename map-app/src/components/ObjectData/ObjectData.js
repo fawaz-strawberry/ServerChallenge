@@ -103,7 +103,7 @@ const ObjectData = ({myConfig}) => {
    * is clicked on
    */
   function goToObject(){
-    setCameraPos([parseInt(myConfig["loc_X"]), parseInt(myConfig["loc_Y"]) + 20, parseInt(myConfig["loc_Z"])])
+    setCameraPos([parseInt(myConfig["loc_X"]), parseInt(myConfig["loc_Y"]) + 40, parseInt(myConfig["loc_Z"])])
   }
 
 
@@ -116,7 +116,7 @@ const ObjectData = ({myConfig}) => {
       <img className="EditIcon" width={32} height={32} src={inEditMode ?  "/edit.png": "/edit.png"} onClick={() => {setInEditMode(!inEditMode)}}></img>
       {inEditMode ? <><img className="EditIcon" width={32} height={32} src="/save.png" onClick={() => {saveObjectData()}}></img><img className="EditIcon" width={32} height={32} src="/delete.png" onClick={() => {deleteObjectData()}}></img></> : null}
       <h3>{myConfig["id"]}</h3>
-      <div className="EnhancedDetail">
+      <div className="EnhancedDetail" hidden={true}>
         {Object.keys(myConfig).map((element) => (
             (element === "id" || element === "title" || element === "key" ) ? null : (inEditMode === true && element !== "_id" && element !== "port") ? <><label className="EnhancedLabel">{element + "(" + myConfig[element] + ")"}</label> <input className="EnhancedInput" onChange={(e) => {updateField(e.target.value, element)}}></input><hr></hr></> : <h4 className="DataField">{element + ": " + myConfig[element]}</h4>
         ))}

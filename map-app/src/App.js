@@ -35,7 +35,7 @@ function App() {
   ])
 
   const [myObjects, setMyObjects] = useState({"data":[]})
-  const [cameraPos, setCameraPos] = useState([70, 200, 0])
+  const [cameraPos, setCameraPos] = useState([0, 300, 0])
 
 
   /**
